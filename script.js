@@ -22,7 +22,6 @@ function initApplication() {
 
 
 async function fetchNode(nodeid, node, level) {
-
 	let queryBody = "";
 	queryBody += "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ";
 	queryBody += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ";
