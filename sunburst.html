@@ -44,20 +44,7 @@ adapted from here => https://github.com/vasturiano/sunburst-chart
 // Fetch data
 
 var url = "https://lindas.admin.ch/query?query=";
-url += encodeURI(
-		"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-		SELECT * WHERE {
-	   	?sub_1 <https://www.ica.org/standards/RiC/ontology#hasRecordSetType> ?all .
-	   			VALUES ?all {<https://culture.ld.admin.ch/ais/vocabularies/recordSetTypes/1> <https://culture.ld.admin.ch/ais/vocabularies/recordSetTypes/10001> <https://culture.ld.admin.ch/ais/vocabularies/recordSetTypes/10003>}
-
-	      # ?sub_1 ?p ?o.
-	        ?sub_1 <https://www.ica.org/standards/RiC/ontology#title> ?title.
-	        ?sub_1 <https://www.ica.org/standards/RiC/ontology#hasRecordSetType> ?level.
- 
- 
-				} LIMIT 1000000"
-		)
+url += encodeURI("SELECT * WHERE {  ?sub ?pred ?obj .} LIMIT 10")
 
 async function asyncCall() {
 	let response = await fetch(
