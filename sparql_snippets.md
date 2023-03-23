@@ -18,3 +18,13 @@ SELECT (COUNT(distinct ?child) as ?count) WHERE {
   	?child <https://www.ica.org/standards/RiC/ontology#isOrWasIncludedIn> <https://culture.ld.admin.ch/ais/1>.
 }
 ```
+## REGEX for string in title (beware it is expensive)
+```sql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT * WHERE {
+   ?sub <https://www.ica.org/standards/RiC/ontology#title> ?title. #i checked, this is only in the AIS-Dataset 
+  	Filter REGEX( ?title, "Guisan") .
+} LIMIT 10000000
+}
+```
