@@ -15,7 +15,8 @@ function initApplication() {
 	};
 	fetchNode(1, rootNode, 2).then(()=> {
 		visualizedata(rootNode);
-		console.log(rootNode);
+		listNode(rootNode);
+		listChildren(rootNode);
 	});
 }
 
@@ -104,4 +105,11 @@ function visualizedata(adapteddata) {
       .showLabels(true)
       .tooltipContent((d, node) => `Size: <i>${node.value}</i>`)
     (document.getElementById('chart'));
+}
+
+function listNode(node) {
+
+}
+function listChildren(node) {
+	
 }
