@@ -17,4 +17,8 @@
     stroke: #ccc;
     stroke-width: 1.5px;
   }
+
+  .sunburst-viz .text-contour {
+    stroke: none !important;
+  }
   

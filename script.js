@@ -95,7 +95,10 @@ async function fetchChildren(children, parentNode, level) {
 
 
 function visualizedata(adapteddata) {
-	const color = d3.scaleOrdinal(d3.schemeCategory10);
+	d3.select("#chart").select("svg").remove();
+	//const color = d3.scaleOrdinal(d3.schemeCategory10);
+	var color = d3.scaleOrdinal(d3.schemeReds[9]);
+	console.log(color);
 	Sunburst()
       .data(adapteddata)
       .color(d => color(d.name))
@@ -147,6 +150,8 @@ function createTable(adapteddata){
 	  table.appendChild(childRow);
 	  childRow.addEventListener('click', () => {
 		console.log(child.name);
+
+		visualizedata(child);
 	  })
 	});
 	
@@ -154,3 +159,4 @@ function createTable(adapteddata){
 	document.body.appendChild(table);
 	
 }
+
