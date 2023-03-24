@@ -37,3 +37,8 @@ ul.breadcrumb li .catalog {
   float:right;
 }
 ul.breadcrumb li:last-child { background-color: silver; font-weight: bold;}
+
+  .sunburst-viz .text-contour {
+    stroke: none !important;
+  }
+  
