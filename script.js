@@ -17,6 +17,7 @@ function initApplication() {
 		visualizedata(rootNode);
 		listNode(rootNode);
 		listChildren(rootNode);
+		createTable(rootNode);
 	});
 }
 
@@ -95,7 +96,6 @@ async function fetchChildren(children, parentNode, level) {
 
 function visualizedata(adapteddata) {
 	const color = d3.scaleOrdinal(d3.schemeCategory10);
-
 	Sunburst()
       .data(adapteddata)
       .color(d => color(d.name))
@@ -111,5 +111,46 @@ function listNode(node) {
 
 }
 function listChildren(node) {
+	
+}
+
+function createTable(adapteddata){
+	console.log(adapteddata.name);
+	console.log(adapteddata.children);
+	console.log(adapteddata.listChildren);
+	console.log(adapteddata.children[0].name)
+	
+	const table = document.createElement('table');
+
+	table.style.cursor = 'pointer';
+
+	// Create the table header row
+	const headerRow = document.createElement('tr');
+	const nameHeader = document.createElement('th');
+	nameHeader.textContent = 'Bundesarchiv';
+	headerRow.appendChild(nameHeader);
+	table.appendChild(headerRow);
+	
+	// Create a row for the root object
+	const rootRow = document.createElement('tr');
+	const rootNameCell = document.createElement('td');
+	rootNameCell.textContent = adapteddata.name;
+	rootRow.appendChild(rootNameCell);
+	table.appendChild(rootRow);
+	
+	// Create rows for the root object's children
+	adapteddata.children.forEach(child => {
+	  const childRow = document.createElement('tr');
+	  const childNameCell = document.createElement('td');
+	  childNameCell.textContent = child.name;
+	  childRow.appendChild(childNameCell);
+	  table.appendChild(childRow);
+	  childRow.addEventListener('click', () => {
+		console.log(child.name);
+	  })
+	});
+	
+	// Add the table to the document
+	document.body.appendChild(table);
 	
 }
