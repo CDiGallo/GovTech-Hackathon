@@ -76,6 +76,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT * WHERE { 
 	?child <https://www.ica.org/standards/RiC/ontology#isOrWasIncludedIn> <https://culture.ld.admin.ch/ais/` + nodeid + `>. 
 	?child <https://www.ica.org/standards/RiC/ontology#title> ?child_title. 
+	?child <https://schema.ld.admin.ch/referenceCode> ?childReferenceCode. 
 	?child <https://schema.ld.admin.ch/position> ?position. 
 } 
 ORDER BY ASC(?position) 
@@ -122,12 +123,11 @@ async function fetchChildren(children, parentNode, level) {
 	for (const child of children) {
 
 		let childId = child.child.value.replace("https://culture.ld.admin.ch/ais/", "");
-		console.log(child);
-
 		let childNode = {
 			"name": child.child_title.value,
 			"value": 1,
 			"identifier": childId,
+			"referenceCode" : child.childReferenceCode.value,
 			"children" : []
 		}
 
@@ -144,11 +144,21 @@ async function fetchChildren(children, parentNode, level) {
 function visualizedata(adapteddata) {
 	d3.select("#chart").select("svg").remove();
 	//const color = d3.scaleOrdinal(d3.schemeCategory10);
-	var color = d3.scaleOrdinal(d3.schemeReds[9]);
-	console.log(color);
+	const color = d3.scaleSequential(d3.interpolateRainbow);
 	Sunburst()
       .data(adapteddata)
-      .color(d => color(d.name))
+      .color(d => {
+
+		referenceCode = d.referenceCode.replace(/\W/g, '');
+		mainCatalog = parseInt(referenceCode.substr(0,1),32) % 100;
+		if (referenceCode.length>1) {
+				subCatalog = parseInt(referenceCode.substr(1,2), 32) % 100;    
+		} else  { 
+			subCatalog = 0; 
+		}
+		catalogColorIndex = (mainCatalog*100 + subCatalog) / 1000.0;
+		return color(catalogColorIndex);
+		})
       /*.minSliceAngle(.4)*/
       .excludeRoot(true)
       .maxLevels(2)
@@ -165,10 +175,6 @@ function listChildren(node) {
 }
 
 function createTable(adapteddata){
-	console.log(adapteddata.name);
-	console.log(adapteddata.children);
-	console.log(adapteddata.listChildren);
-	console.log(adapteddata.children[0].name)
 	
 	const table = document.createElement('table');
 
@@ -203,6 +209,6 @@ function createTable(adapteddata){
 	});
 	
 	// Add the table to the document
-	document.body.appendChild(table);
+	document.getElementById("children").appendChild(table);
 	
 }
