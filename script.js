@@ -144,21 +144,10 @@ async function fetchChildren(children, parentNode, level) {
 function visualizedata(adapteddata) {
 	d3.select("#chart").select("svg").remove();
 	//const color = d3.scaleOrdinal(d3.schemeCategory10);
-	const color = d3.scaleSequential(d3.interpolateRainbow);
-	Sunburst()
+	var color = d3.scaleOrdinal(d3.schemeReds[9]);
+		Sunburst()
       .data(adapteddata)
-      .color(d => {
-
-		referenceCode = d.referenceCode.replace(/\W/g, '');
-		mainCatalog = parseInt(referenceCode.substr(0,1),32) % 100;
-		if (referenceCode.length>1) {
-				subCatalog = parseInt(referenceCode.substr(1,2), 32) % 100;    
-		} else  { 
-			subCatalog = 0; 
-		}
-		catalogColorIndex = (mainCatalog*100 + subCatalog) / 1000.0;
-		return color(catalogColorIndex);
-		})
+      .color(d => color(d.name))
       /*.minSliceAngle(.4)*/
       .excludeRoot(true)
       .maxLevels(2)

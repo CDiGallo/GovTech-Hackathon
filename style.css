@@ -60,6 +60,6 @@ ul.breadcrumb li:last-child { background-color: silver; font-weight: bold;}
 }
 
 svg {
-    width: 1764px !important;
-    height: 1000px !important;
+    max-width: 85%;
+    max-height: 85%;
 }
